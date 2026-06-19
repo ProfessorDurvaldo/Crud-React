@@ -35,8 +35,27 @@ function App() {
       imagem: inputImagem.trim(),
     };
     // Salva no array
-    console.log(novoItem);
     setItems([...items, novoItem]);
+    setInputNome('');
+    setInputValor('');
+    setInputImagem('');
+  }
+
+  function editarCadastro() {
+    if (!inputNome.trim()) return;
+
+    const itensAtualizados = items.map((tecnologia) => {
+      return tecnologia.id == editandoId ? {
+        id: tecnologia.id,
+        nome: inputNome,
+        valor: inputValor,
+        imagem: inputImagem,
+      } : tecnologia
+    })
+
+    // Salva no array
+    setItems(itensAtualizados);
+    setEditandoId(null)
     setInputNome('');
     setInputValor('');
     setInputImagem('');
@@ -89,7 +108,7 @@ function App() {
         {editandoId ? 
           (<div className="form-botoes">
             <button className="btn-cancelar" onClick={cancelarEdicao} >Cancelar</button>
-            <button className="btn-salvar" onClick={() => {}} >Editar</button>
+            <button className="btn-salvar" onClick={editarCadastro} >Editar</button>
           </div>) 
           : 
           (<button onClick={cadastrar}>Cadastrar</button>)
@@ -99,7 +118,7 @@ function App() {
 
       <ul className="lista">
         {filtrados.map((tecnologia) => (
-          <li key={tecnologia.id} className="item">
+          <li key={tecnologia.id} className={`item ${editandoId == tecnologia.id ? 'item-editando' : ''}`}>
             <img
               src={tecnologia.imagem}
               alt={tecnologia.nome}
