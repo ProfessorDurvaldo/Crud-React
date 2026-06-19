@@ -9,20 +9,20 @@ function App() {
   const [inputValor, setInputValor] = useState('');
   const [inputImagem, setInputImagem] = useState('');
   const [items, setItems] = useState(tecnologias);
-  const [editandoId, setEditandoId] = useState(null);
+  const [editandoId, setEditandoId] = useState(null)
 
   function iniciarEdicao(tecnologia) {
-    setEditandoId(tecnologia.id);
-    setInputNome(tecnologia.nome);
-    setInputValor(tecnologia.valor);
-    setInputImagem(tecnologia.imagem);
+    setEditandoId(tecnologia.id)
+    setInputNome(tecnologia.nome)
+    setInputValor(tecnologia.valor)
+    setInputImagem(tecnologia.imagem)
   }
 
   function cancelarEdicao() {
-    setEditandoId(null);
-    setInputNome('');
-    setInputValor('');
-    setInputImagem('');
+    setEditandoId(null)
+    setInputNome("")
+    setInputValor("")
+    setInputImagem("")
   }
 
   function cadastrar() {
@@ -49,9 +49,9 @@ function App() {
   // Função de apagar
   function apagar(id) {
     const novaLista = items.filter((tecnologia) => {
-      return tecnologia.id !== id;
-    });
-    setItems(novaLista);
+      return tecnologia.id !== id
+    })
+    setItems(novaLista)
   }
 
   return (
@@ -65,7 +65,7 @@ function App() {
       />
 
       <div className="form">
-        <h2>Cadastrar Tecnologias</h2>
+        <h2>{editandoId ? "Editar Tecnologia" : "Cadastrar Tecnologia"}</h2>
 
         <input
           type="text"
@@ -86,18 +86,15 @@ function App() {
           onChange={(e) => setInputImagem(e.target.value)}
         />
 
-        {editandoId ? (
-          <div className="form-botoes">
-            <button className="btn-cancelar" onClick={cancelarEdicao}>
-              Cancelar
-            </button>
-            <button className="btn-salvar" onClick={() => {}}>
-              Editar
-            </button>
-          </div>
-        ) : (
-          <button onClick={cadastrar}>Cadastrar</button>
-        )}
+        {editandoId ? 
+          (<div className="form-botoes">
+            <button className="btn-cancelar" onClick={cancelarEdicao} >Cancelar</button>
+            <button className="btn-salvar" onClick={() => {}} >Editar</button>
+          </div>) 
+          : 
+          (<button onClick={cadastrar}>Cadastrar</button>)
+        }
+        
       </div>
 
       <ul className="lista">
@@ -115,24 +112,15 @@ function App() {
 
             {/* Botão de apagar */}
             <div className="acoes">
-              <button
-                className="btn-apagar"
-                onClick={() => {
-                  apagar(tecnologia.id);
-                }}
-              >
+              <button className="btn-apagar" onClick={() => {apagar(tecnologia.id)}}>
                 Apagar
               </button>
               {/* Botão de editar */}
-              <button
-                className="btn-editar"
-                onClick={() => {
-                  iniciarEdicao(tecnologia);
-                }}
-              >
+              <button className="btn-editar" onClick={() => {iniciarEdicao(tecnologia)}}>
                 Editar
               </button>
             </div>
+
           </li>
         ))}
       </ul>
